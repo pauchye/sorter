@@ -1,6 +1,6 @@
 export function animateMergeSort(array) {
     let animation = [];
-    // if(array.length <= 1) return array;
+
     let copyArray = array.slice();
     mergeSort(array, animation, 0, array.length-1,copyArray);
     return animation;

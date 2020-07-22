@@ -1,6 +1,7 @@
 import React from 'react';
 import './sorting.css'
 import { animateMergeSort } from './merge'
+import { animateQuickSort } from './quick'
 const SCALE = 16;
 const COLOR1 = 'gray';
 const COLOR2 = 'red';
@@ -13,6 +14,7 @@ class Sorter extends React.Component {
         }
         this.createNums = this.createNums.bind(this);
         this.mergeSort = this.mergeSort.bind(this);
+        this.quickSort = this.quickSort.bind(this);
     }
 
     createNums() {
@@ -52,6 +54,21 @@ class Sorter extends React.Component {
         }
     }
 
+    quickSort(){
+        const animation = animateQuickSort(this.state.nums);
+        console.log('animation', animation)
+        for (let i = 0; i < animation.length; i++) {
+
+            setTimeout(() => {
+                // bars[red1].style.backgroundColor = COLOR2;
+                // bars[red2].style.backgroundColor = COLOR2;
+            }, i*40+10)
+
+        }
+
+        // let bars = document.getElementsByClassName('sort-bar');
+    }
+
     componentDidMount(){
         this.createNums()
     }
@@ -73,19 +90,18 @@ class Sorter extends React.Component {
                     >{num}</div>)}
                     </div>
                     <div className='bucket'>
-                    {[...Array(25).keys()].map((num, id) => <div 
+                    {[...Array(26).keys()].map((num, id) => <div 
                             key={id}
                             className='bucket-bar'
                             
                     >{num}</div>)}                        
                     </div>
                 </div>
-
-               
-                <div className='screen-right'>
+            
+               <div className='screen-right'>
                     <div className='button' onClick={this.createNums}> Generate numbers</div>
                     <div className='button' onClick={this.mergeSort}> Merge Sort</div>
-
+                    <div className='button' onClick={this.quickSort}> Quick Sort</div>
                 </div>
                 
                 
