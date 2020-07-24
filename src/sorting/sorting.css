@@ -1,9 +1,25 @@
+html{
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    position:relative;
+    background-color: rgb(247, 247, 247);
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    height: 100%;
+}
+
 .body {
+    height: 100%;
     display: flex;
     flex-direction: row;
+    /* background-color: rgb(247, 247, 247); */
 }
 
 .left {
+    padding-top: 5px;
     padding-left: 100px;
     display: flex;
     flex-direction: column;
@@ -18,7 +34,10 @@
    align-items: flex-end;
    justify-content: space-between;
    padding: 20px;
+   background-color: white;
+   box-shadow: inset 0px 0px 6px 3px rgba(0,0,0,0.43);
 }
+
 
 .screen-right {
     padding-left: 100px;
@@ -27,7 +46,7 @@
 .bucket {
     width: 660px;
     height: 140px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: row;    
     align-items: flex-start;
@@ -37,7 +56,9 @@
 
 .bucket-bar {
     height: 20px;
-    background-color: rgb(212, 212, 212);
+    background-color: rgb(255, 255, 255);
+    /* border: 1px solid rgb(160, 160, 160); */
+    box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2);
     min-width: 18px;
     max-width: 18px;
 }
@@ -52,15 +73,19 @@
 } */
 
 .sort-bar {
+    font-size: 0.75em;
     min-width: 18px;
     max-width: 18px;
-    border: 1px solid black;
+    /* border: 1px solid rgb(218, 218, 218);
+    border: 1px solid rgb(122, 122, 122); */
     text-align: start;
+    box-shadow:  0px 0px 1px 1px rgba(0,0,0,0.3);
 }
 
 .button {
     border: 1px solid black;
     padding: 2px;
-    margin: 5px;
-    background-color: rgb(185, 185, 185);
+    margin: 10px;
+    background-color: rgb(223, 223, 223);
+    box-shadow:  0px 0px 2px 1px rgba(0,0,0,0.2);
 }

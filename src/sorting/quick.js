@@ -42,7 +42,9 @@ function quickSort(array, startInd, endInd, animation) {
         animation.push({from: elem.idx, to: idx, oldVal: oldVal, newVal: elem.num});
         idx++;
     }
-    array[idx++] = pivot;
+    animation.push({from: startInd, to: idx, oldVal: array[idx], newVal: pivot});
+    array[idx] = pivot;
+    idx++;
     for ( let elem of right ) {
         let oldVal = array[idx];
         array[idx] = elem.num;

@@ -2,9 +2,15 @@ import React from 'react';
 import './sorting.css'
 import { animateMergeSort } from './merge'
 import { animateQuickSort } from './quick'
-const SCALE = 16;
-const COLOR1 = 'gray';
+import { animateBubbleSort } from './bubble'
+const SCALE = 10;
+const COLOR1 = 'rgb(218, 218, 218)';
 const COLOR2 = 'red';
+
+const animScale = 40;
+const animIncrement = 10;
+
+const arraySize = 25;
 
 class Sorter extends React.Component {
     constructor(props){
@@ -15,15 +21,20 @@ class Sorter extends React.Component {
         this.createNums = this.createNums.bind(this);
         this.mergeSort = this.mergeSort.bind(this);
         this.quickSort = this.quickSort.bind(this);
+        this.bubbleSort = this.bubbleSort.bind(this);
     }
 
     createNums() {
-        let arr = [];
-        for (let i = 0; i < 26; i++) {
-            arr.push(Math.floor(Math.random() * Math.floor(30)))
+        const data = [];
+        // const data = new Set();
+        // while (data.size < arraySize) {
+        while (data.length < arraySize) {
+            const next = Math.floor(1 + (Math.random() * 50));
+            data.push(next)
+            // data.add(next);
         }
-        this.setState({nums: arr});
-        
+
+        this.setState({nums: Array.from(data)});
     }
 
     mergeSort() {
@@ -41,32 +52,81 @@ class Sorter extends React.Component {
             setTimeout(() => {
                 bars[red1].style.backgroundColor = COLOR2;
                 bars[red2].style.backgroundColor = COLOR2;
-            }, i*40+10)
+            }, i * animScale + animIncrement)
             setTimeout(() => {
                 bars[gray1].style.backgroundColor = COLOR1;
                 bars[gray2].style.backgroundColor = COLOR1;
-            }, i*40+20)
+            }, i * animScale + animIncrement * 2)
             setTimeout(() => {
                 bars[ind].style.height = `${newHeight * SCALE}px`;
                 bars[ind].textContent = `${newHeight}`;
-            }, i*40+30)
+            }, i * animScale + animIncrement * 3)
 
         }
     }
 
     quickSort(){
-        const animation = animateQuickSort(this.state.nums);
+        const animation = animateQuickSort(this.state.nums).filter(anim => anim.from !== anim.to && anim.oldVal !== anim.newVal);
         console.log('animation', animation)
+        let bars = document.getElementsByClassName('sort-bar');
+        console.log('bars', bars)
         for (let i = 0; i < animation.length; i++) {
+            let oldVal = animation[i].oldVal
+            let newVal = animation[i].newVal
+            let to = animation[i].to
+            let from = animation[i].from
+        
+            setTimeout(() => {
+                bars[to].style.backgroundColor = COLOR2;
+                bars[from].style.backgroundColor = COLOR2;
+            }, i * animScale + animIncrement)
 
             setTimeout(() => {
-                // bars[red1].style.backgroundColor = COLOR2;
-                // bars[red2].style.backgroundColor = COLOR2;
-            }, i*40+10)
+                bars[to].style.height = `${newVal * SCALE}px`;
+                // bars[from].style.height = `${oldVal * SCALE}px`;
+                // bars[from].textContent = `${oldVal}`;
+                bars[to].textContent = `${newVal}`;
+            }, i * animScale + animIncrement * 2)
+
+            setTimeout(() => {
+                bars[to].style.backgroundColor = COLOR1;
+                bars[from].style.backgroundColor = COLOR1;
+            }, i * animScale + animIncrement * 2)
 
         }
 
         // let bars = document.getElementsByClassName('sort-bar');
+    }
+
+    bubbleSort(){
+        const animation = animateBubbleSort(this.state.nums);
+
+        let bars = document.getElementsByClassName('sort-bar');
+        console.log('bars', bars)
+        for (let i = 0; i < animation.length; i++) {
+            let oldVal = animation[i].oldVal
+            let newVal = animation[i].newVal
+            let to = animation[i].to
+            let from = animation[i].from
+        
+            setTimeout(() => {
+                bars[to].style.backgroundColor = COLOR2;
+                bars[from].style.backgroundColor = COLOR2;
+            }, i * animScale + animIncrement)
+
+            setTimeout(() => {
+                bars[to].style.height = `${oldVal * SCALE}px`;
+                bars[from].style.height = `${newVal * SCALE}px`;
+                bars[from].textContent = `${newVal}`;
+                bars[to].textContent = `${oldVal}`;
+            }, i * animScale + animIncrement * 2)
+
+            setTimeout(() => {
+                bars[to].style.backgroundColor = COLOR1;
+                bars[from].style.backgroundColor = COLOR1;
+            }, i * animScale + animIncrement * 2)
+
+        }
     }
 
     componentDidMount(){
@@ -89,19 +149,21 @@ class Sorter extends React.Component {
                             data-value={num}
                     >{num}</div>)}
                     </div>
-                    <div className='bucket'>
-                    {[...Array(26).keys()].map((num, id) => <div 
+                    {/* <div className='bucket'>
+                    {[...Array(arraySize).keys()].map((num, id) => <div 
                             key={id}
                             className='bucket-bar'
                             
                     >{num}</div>)}                        
-                    </div>
+                    </div> */}
                 </div>
             
                <div className='screen-right'>
+                   <h3>Sorting visualization</h3>
                     <div className='button' onClick={this.createNums}> Generate numbers</div>
                     <div className='button' onClick={this.mergeSort}> Merge Sort</div>
                     <div className='button' onClick={this.quickSort}> Quick Sort</div>
+                    <div className='button' onClick={this.bubbleSort}> Bubble Sort</div>
                 </div>
                 
                 
@@ -112,3 +174,13 @@ class Sorter extends React.Component {
 }
 
 export default Sorter;
+
+
+/*
+
+14 7 22 6 3
+
+
+
+
+*/
